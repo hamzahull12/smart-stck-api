@@ -17,3 +17,8 @@ export interface CreateProduct {
   stock: number;
   description?: string;
 }
+
+export interface ProductQueryFilter {
+  search?: string;
+  category_id?: string;
+}

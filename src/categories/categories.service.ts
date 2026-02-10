@@ -42,7 +42,7 @@ export class CategoriesService {
     return result.rows.map((row) => new Category(row));
   }
 
-  async getAllByid(id: number): Promise<Category> {
+  async getAllByid(id: string): Promise<Category> {
     const query = {
       text: 'SELECT id, name, description FROM categories WHERE id = $1',
       values: [id],
