@@ -9,6 +9,14 @@ export const CreateProductSchema = Joi.object({
   description: Joi.string().allow('', null),
 });
 
+export const UpdateProductSchema = Joi.object({
+  name: Joi.string().min(3).max(100).optional(),
+  sku: Joi.string().uppercase().optional(),
+  price: Joi.number().min(0).optional(),
+  stock: Joi.number().integer().min(0).optional(),
+  description: Joi.string().allow('').optional(),
+}).min(1);
+
 export interface CreateProduct {
   category_id: string;
   name: string;
