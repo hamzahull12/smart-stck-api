@@ -89,17 +89,6 @@ export class ProductsController {
     };
   }
 
-  @Delete(':id')
-  @ApiOperation({ summary: 'Soft delete produk' })
-  @ApiResponse({ status: 200, description: 'Produk berhasil dihapus' })
-  async softRemove(@Param('id') id: string) {
-    await this.productsService.softDeleteProduct(id);
-    return {
-      status: 'success',
-      message: 'Produk berhasil dihapus (soft delete)',
-    };
-  }
-
   @Put(':id')
   @ApiOperation({ summary: 'Update data produk' })
   async updateProduct(
@@ -108,10 +97,20 @@ export class ProductsController {
     updateProductDto: UpdateProductDto,
   ) {
     await this.productsService.updateProduct(id, updateProductDto);
-
     return {
       status: 'success',
       message: 'Data produk berhasil diperbarui',
+    };
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Soft delete produk' })
+  @ApiResponse({ status: 200, description: 'Produk berhasil dihapus' })
+  async softRemove(@Param('id') id: string) {
+    await this.productsService.softDeleteProduct(id);
+    return {
+      status: 'success',
+      message: 'Produk berhasil dihapus (soft delete)',
     };
   }
 }

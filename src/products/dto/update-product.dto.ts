@@ -12,9 +12,6 @@ export class UpdateProductDto {
   price?: number;
 
   @ApiPropertyOptional()
-  stock?: number;
-
-  @ApiPropertyOptional()
   description?: string;
 
   @ApiPropertyOptional()

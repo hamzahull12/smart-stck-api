@@ -16,9 +16,6 @@ export class CreateProductDto {
   @ApiProperty({ example: 28500000 })
   price: number;
 
-  @ApiProperty({ example: 15 })
-  stock: number;
-
   @ApiPropertyOptional({ example: 'Chip M3, RAM 16GB, SSD 512GB' })
   description?: string;
 }
