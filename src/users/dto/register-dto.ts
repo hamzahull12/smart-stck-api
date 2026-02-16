@@ -27,3 +27,11 @@ export class CreateUserDto {
   })
   role?: string;
 }
+
+export interface UserEntity {
+  id: string;
+  username: string;
+  password: string; // Hash password
+  fullname: string;
+  role: 'admin' | 'staff';
+}

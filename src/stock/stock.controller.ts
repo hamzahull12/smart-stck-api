@@ -1,18 +1,43 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JoiValidationPipe } from 'src/commons/pipes/joi-validation.pipe';
 import { ProductsService } from 'src/products/products.service';
 import { UpdateStockDto, UpdateStockSchema } from './dto/update-stock.dto';
+import { JwtAuthGuard } from 'src/commons/security/jwt-auth.guard';
+import { RolesGuard } from 'src/commons/security/roles.guard';
+import { Roles } from 'src/commons/decorators/roles.decorator';
 
 @ApiTags('Inventory History (stok)')
 @Controller('stock')
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class StockController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post('update')
   @HttpCode(201)
-  @ApiOperation({ summary: 'Update stok barang (IN/OUT)' })
-  @ApiResponse({ status: 201, description: 'Berhasil update' })
+
+  // Hanya user dengan role 'admin' yang bisa akses method ini
+  @UseGuards(RolesGuard)
+  @Roles('admin')
+  @ApiOperation({ summary: 'Update stok barang (IN/OUT) - Khusus Admin' })
+  @ApiResponse({ status: 201, description: 'Berhasil update stok' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden: Hanya Admin yang boleh mengubah stok',
+  })
   async updateStok(
     @Body(new JoiValidationPipe(UpdateStockSchema)) dto: UpdateStockDto,
   ) {

@@ -12,6 +12,17 @@ async function bootstrap() {
     .setDescription('Dokumentasi API untuk Manajemen Stock')
     .addTag('categories')
     .addTag('products')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Masukkan Access Token kamu',
+        in: 'header',
+      },
+      'bearer',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
